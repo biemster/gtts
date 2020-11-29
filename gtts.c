@@ -23,9 +23,9 @@ void handleLibraryLogging(int severity, const char* msg);
 int main(int argc, char *argv[]) {
 	// GoogleTtsSetLogger(handleLibraryLogging);
 
-	string path_prefix= "./en-us"; // pipeline is extracted zvoice archive
-	string pipeline_path = path_prefix + "/pipeline";
-	GoogleTtsInit(path_prefix.c_str(), pipeline_path.c_str());
+	string path_prefix= "./en-us/"; // pipeline is extracted zvoice archive
+	string pipeline_path = path_prefix + "pipeline";
+	GoogleTtsInit(pipeline_path.c_str(), path_prefix.c_str());
 
 	string text = "text: Hi There!";
 	vector<uint8_t> text_jspb(text.begin(), text.end());
