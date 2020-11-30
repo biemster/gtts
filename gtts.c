@@ -1,12 +1,10 @@
 #include <iostream>
-#include <cstddef>
 #include <vector>
 #include <string.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-extern void GoogleTtsSetLogger(void (*logger_func)(int severity, const char* message));
 extern bool GoogleTtsInit(const char* pipeline_path, const char* path_prefix);
 extern bool GoogleTtsInstallVoice(const char* voice_name, const uint8_t* voice_bytes, int size);
 extern bool GoogleTtsInitBuffered(const uint8_t* text_jspb, int text_jspb_len);
@@ -19,8 +17,6 @@ extern void GoogleTtsShutdown();
 #endif
 
 using namespace std;
-
-void handleLibraryLogging(int severity, const char* msg);
 
 int main(int argc, char *argv[]) {
 	string path_prefix= "./en-us/"; // pipeline is extracted zvoice archive
@@ -58,8 +54,4 @@ int main(int argc, char *argv[]) {
 
 
 	return 0;
-}
-
-void handleLibraryLogging(int severity, const char* msg) {
-	cout << severity << ": " << msg << endl;
 }
