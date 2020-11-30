@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <cstddef>
 #include <vector>
 #include <string.h>
@@ -24,15 +23,12 @@ using namespace std;
 void handleLibraryLogging(int severity, const char* msg);
 
 int main(int argc, char *argv[]) {
-	// GoogleTtsSetLogger(handleLibraryLogging);
-	//vector<char> text_jspb2 = { '\n', '\026', '\n', '\024', '\n', '\005', 'h', 'e', 'l', 'l', 'o', '\242', '\001', '\n', '\025', '\0', '\0', '\200', '?', '\035', '\0', '\0', '\200', '?' };
-
 	string path_prefix= "./en-us/"; // pipeline is extracted zvoice archive
 	string pipeline_path = path_prefix + "pipeline";
 	GoogleTtsInit(pipeline_path.c_str(), path_prefix.c_str());
 
-	string text = "hello";
-	char tlen = text.size();
+	char* text = argv[1];
+	char tlen = strlen(text);
 	const char *footer = "\242\001\n\025\0\0\200?\035\0\0\200?";
 	int flen = 15;
 	char mlen = tlen +flen;
@@ -42,12 +38,10 @@ int main(int argc, char *argv[]) {
 	int text_jspb_len = (hlen -2) + tlen + flen; // this is a mess
 	uint8_t *text_jspb = (uint8_t*)malloc((text_jspb_len +2)*sizeof(uint8_t));
 	memcpy(text_jspb, header, 6);
-	memcpy(text_jspb +6, text.c_str(), tlen);
+	memcpy(text_jspb +6, text, tlen);
 	memcpy(text_jspb +6 +tlen, footer, flen);
 	GoogleTtsInitBuffered(text_jspb, text_jspb_len);
 
-	ofstream audio_file;
-	audio_file.open("audio.raw", ios::out | ios::binary);
 	vector<float> audio_buffer;
 	audio_buffer.resize(GoogleTtsGetFramesInAudioBuffer());
 	size_t frames_in_buf = 0;
@@ -55,9 +49,8 @@ int main(int argc, char *argv[]) {
 	while(status > 0) {
 		status = GoogleTtsReadBuffered(&audio_buffer[0], &frames_in_buf);
 		audio_buffer.resize(frames_in_buf);
-		audio_file.write(reinterpret_cast<char*>(&audio_buffer[0]), audio_buffer.size()*sizeof(float));
+		cout.write(reinterpret_cast<char*>(&audio_buffer[0]), audio_buffer.size()*sizeof(float));
 	}
-	audio_file.close();
 
 	GoogleTtsFinalizeBuffered();
 	GoogleTtsShutdown();
