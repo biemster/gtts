@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cstddef>
 #include <vector>
+#include <string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -24,20 +25,26 @@ void handleLibraryLogging(int severity, const char* msg);
 
 int main(int argc, char *argv[]) {
 	// GoogleTtsSetLogger(handleLibraryLogging);
+	//vector<char> text_jspb2 = { '\n', '\026', '\n', '\024', '\n', '\005', 'h', 'e', 'l', 'l', 'o', '\242', '\001', '\n', '\025', '\0', '\0', '\200', '?', '\035', '\0', '\0', '\200', '?' };
 
 	string path_prefix= "./en-us/"; // pipeline is extracted zvoice archive
 	string pipeline_path = path_prefix + "pipeline";
 	GoogleTtsInit(pipeline_path.c_str(), path_prefix.c_str());
 
-	string text = "Hi there!";
+	string text = "hello";
 	char tlen = text.size();
 	const char *footer = "\242\001\n\025\0\0\200?\035\0\0\200?";
-	string jspb = to_string(tlen) + text + footer;
-	char jspb_len = jspb.size();
-	jspb = string("\n") + (char)(jspb_len +2) + "\n" + jspb_len + jspb;
-	// vector<uint8_t> text_jspb(jspb.begin(), jspb.end());
-	vector<char> text_jspb = { '\n', '\026', '\n', '\024', '\n', '\005', 'h', 'e', 'l', 'l', 'o', '\242', '\001', '\n', '\025', '\0', '\0', '\200', '?', '\035', '\0', '\0', '\200', '?' };
-	GoogleTtsInitBuffered((uint8_t*)(&text_jspb[0]), text_jspb.size());
+	int flen = 15;
+	char mlen = tlen +flen;
+	char pblen = mlen +2;
+	char header[] = {'\n', pblen, '\n', mlen, '\n', tlen};
+	int hlen = 6;
+	int text_jspb_len = (hlen -2) + tlen + flen; // this is a mess
+	uint8_t *text_jspb = (uint8_t*)malloc((text_jspb_len +2)*sizeof(uint8_t));
+	memcpy(text_jspb, header, 6);
+	memcpy(text_jspb +6, text.c_str(), tlen);
+	memcpy(text_jspb +6 +tlen, footer, flen);
+	GoogleTtsInitBuffered(text_jspb, text_jspb_len);
 
 	ofstream audio_file;
 	audio_file.open("audio.raw", ios::out | ios::binary);
@@ -54,6 +61,7 @@ int main(int argc, char *argv[]) {
 
 	GoogleTtsFinalizeBuffered();
 	GoogleTtsShutdown();
+	delete text_jspb;
 
 
 	return 0;
