@@ -6,7 +6,7 @@ This is a proof of concept how to write code against the libchrometts library fo
 It's not a full application, but it will write out raw audio to stdout which can then be piped to for example ALSA or SoX.
 
 ##### Prepare:
-Get a copy of googletts-\<version\>.tar.gz, 14.6 is the latest at the time of this writing. Google will give good results where to find it.
+Get a copy of googletts-\<version\>.tar.xz, 14.6 is the latest at the time of this writing. Google will give good results where to find it.
 Unpack at least one of the `zvoice` files (which are just zip files, `unzip` can handle them), and have the `path_prefix` variable in the code point at it.
 Also symlink the proper `libchrometts_<platfrom>.so` from the tarball here where the code lives.
 
