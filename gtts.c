@@ -19,11 +19,16 @@ extern void GoogleTtsShutdown();
 using namespace std;
 
 int main(int argc, char *argv[]) {
+	int text_idx = 1;
 	string path_prefix= "./en-us/"; // pipeline is extracted zvoice archive
+	if(argc == 3) {
+		path_prefix = argv[1];
+		text_idx = 2;
+	}
 	string pipeline_path = path_prefix + "pipeline";
 	GoogleTtsInit(pipeline_path.c_str(), path_prefix.c_str());
 
-	char* text = argv[1];
+	char* text = argv[text_idx];
 	char tlen = strlen(text);
 	const char *footer = "\242\001\n\025\0\0\200?\035\0\0\200?";
 	int flen = 15;
