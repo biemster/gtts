@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 	header[hlen++] = '\n';
 	hlen += put_int(header + hlen, tlen);
 
-	int text_jspb_len = hlen + tlen + flen; // this is a mess
+	int text_jspb_len = hlen + tlen + flen;
 	uint8_t *text_jspb = (uint8_t*)malloc(text_jspb_len * sizeof(uint8_t));
 	memcpy(text_jspb, header, hlen);
 	memcpy(text_jspb +hlen, text, tlen);
