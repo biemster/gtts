@@ -66,9 +66,7 @@ int main(int argc, char *argv[]) {
 	vector<float> audio_buffer;
 	audio_buffer.resize(GoogleTtsGetFramesInAudioBuffer());
 	size_t frames_in_buf = 0;
-	int status = 1;
-	while(status > 0) {
-		status = GoogleTtsReadBuffered(&audio_buffer[0], &frames_in_buf);
+	while(GoogleTtsReadBuffered(&audio_buffer[0], &frames_in_buf) > 0) {
 		audio_buffer.resize(frames_in_buf);
 		cout.write(reinterpret_cast<char*>(&audio_buffer[0]), audio_buffer.size()*sizeof(float));
 	}

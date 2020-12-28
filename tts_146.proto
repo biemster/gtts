@@ -1,0 +1,20 @@
+syntax = "proto2";
+package tts;
+
+message Utterance {
+    required msg_a a = 1;
+}
+
+message msg_a {
+    required msg_b b = 1;
+}
+
+message msg_b {
+    required string text = 1;
+    required msg_params params = 20;
+}
+
+message msg_params {
+    required float pitch = 2;
+    required float speed = 3;
+}
