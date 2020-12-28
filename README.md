@@ -19,3 +19,7 @@ make
 ```
 ./gtts "Hello from Google Text to Speech!" | aplay -r22050 -fFLOAT_LE -c1
 ```
+or with python
+```
+./gtts.py | aplay -r22050 -fFLOAT_LE -c1
+```
