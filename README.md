@@ -19,5 +19,9 @@ make
 
 ##### Run:
 ```
-./gtts "Hello from Google Text to Speech!" | aplay -r22050 -fFLOAT_LE -c1
+./gtts "Hello from Google Text to Speech!" | aplay -r24000 -fFLOAT_LE -c1
+```
+or using python:
+```
+./gtts.py | aplay -r24000 -fFLOAT_LE -c1
 ```

@@ -7,7 +7,7 @@ extern "C" {
 #endif
 extern bool GoogleTtsInit(const char* pipeline_path, const char* path_prefix);
 extern bool GoogleTtsInstallVoice(const char* voice_name, const uint8_t* voice_bytes, int size);
-extern bool GoogleTtsInitBuffered(const uint8_t* text_jspb, int text_jspb_len);
+extern bool GoogleTtsInitBuffered(const uint8_t* text_jspb, const char* speaker_name, int text_jspb_len);
 extern size_t GoogleTtsGetFramesInAudioBuffer();
 extern int GoogleTtsReadBuffered(float* audio_channel_buffer, size_t* frames_written);
 extern void GoogleTtsFinalizeBuffered();
@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
 		path_prefix = argv[1];
 		text_idx = 2;
 	}
-	string pipeline_path = path_prefix + "pipeline";
+	string pipeline_path = path_prefix + "pipeline.pb";
 	GoogleTtsInit(pipeline_path.c_str(), path_prefix.c_str());
 
 	char* text = argv[text_idx];
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
 	memcpy(text_jspb +hlen, text, tlen);
 	memcpy(text_jspb +hlen +tlen, footer, flen);
 
-	GoogleTtsInitBuffered(text_jspb, text_jspb_len);
+	GoogleTtsInitBuffered(text_jspb, "hol", text_jspb_len);
 
 	vector<float> audio_buffer;
 	audio_buffer.resize(GoogleTtsGetFramesInAudioBuffer());
