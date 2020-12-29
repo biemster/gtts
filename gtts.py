@@ -17,7 +17,7 @@ class GTTS():
         u.a.b.params.pitch = 1.
         u.a.b.params.speed = 1.
         text_jspb = u.SerializeToString()
-        self.ttslib.GoogleTtsInitBuffered(text_jspb, speaker, len(text_jspb))
+        self.ttslib.GoogleTtsInitBuffered(text_jspb, speaker.encode('utf8'), len(text_jspb))
 
         audio_buffer = (ctypes.c_char * (self.ttslib.GoogleTtsGetFramesInAudioBuffer() *4))() # GoogleTtsReadBuffered uses floats, float is 4x bigger than char
         frames_in_buf = (ctypes.c_int * 1)()
