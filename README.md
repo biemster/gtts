@@ -7,9 +7,9 @@ It's not a full application, but it will write out raw audio to stdout which can
 
 ##### Prepare:
 Get a copy of googletts-\<version\>.tar.xz, 14.9 is the latest supported at the time of this writing (it's the same as 14.7 and 14.8).
-The version jumped to 25 on march 12th, but that is not working reliably with this client yet.
+The version jumped to 25 on march 12th (and quickly to 26.1), but that is not working with this client yet as it is using a protobuf for speaker params now.
 The `main` branch tries to keep up with the latest version, but if it turns out that it does not work with the newest googletts version,
-checkout a previous version branch like `v14.6` and download the corresponding googletts tarball. Google will give good results where to find it.
+checkout a previous version branch like `v14.6` or `v14.9` and download the corresponding googletts tarball. Google will give good results where to find it.
 Unpack at least one of the `zvoice` files (which are just zip files, `unzip` can handle them), and have the `path_prefix` variable in the code point at it.
 Also symlink the proper `libchrometts_<platfrom>.so` from the tarball here where the code lives.
 
