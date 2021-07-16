@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import sys
+import sys,os
 import ctypes
 import tts_pb2 as Utterance # protoc tts.proto --python_out=.
 
@@ -7,8 +7,8 @@ c_float_p = ctypes.POINTER(ctypes.c_float)
 c_int_p = ctypes.POINTER(ctypes.c_int)
 
 class GTTS():
-    def __init__(self, path='./en-us-x-multi/', pipeline='pipeline.pb'):
-        self.ttslib = ctypes.CDLL('./libchrometts.so')
+    def __init__(self, path=os.path.abspath(os.path.dirname(__file__)) + '/en-us-x-multi-r26/', pipeline='pipeline.pb'):
+        self.ttslib = ctypes.CDLL(os.path.abspath(os.path.dirname(__file__)) + '/libchrometts.so')
         self.ttslib.GoogleTtsInit(bytes((path + pipeline).encode('utf8')), bytes(path.encode('utf8')))
 
     def speak(self, utterance, speaker='hol'):
