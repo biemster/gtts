@@ -6,8 +6,8 @@ This is a proof of concept how to write code against the libchrometts library fo
 It's not a full application, but it will write out raw audio to stdout which can then be piped to for example ALSA or SoX.
 
 ##### Prepare:
-Get a copy of googletts-\<version\>.tar.xz, 14.9 is the latest supported at the time of this writing (it's the same as 14.7 and 14.8).
-The version jumped to 25 on march 12th (and quickly to 26.1), but that is not working with this client yet as it is using a protobuf for speaker params now.
+Get a copy of googletts-\<version\>.tar.xz, 26.5 is the latest supported version for the python client at the time of this writing
+(the C version is not actively developed anymore, but kept for reference).
 The `main` branch tries to keep up with the latest version, but if it turns out that it does not work with the newest googletts version,
 checkout a previous version branch like `v14.6` or `v14.9` and download the corresponding googletts tarball. Google will give good results where to find it.
 Unpack at least one of the `zvoice` files (which are just zip files, `unzip` can handle them), and have the `path_prefix` variable in the code point at it.
